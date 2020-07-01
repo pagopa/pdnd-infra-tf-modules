@@ -44,6 +44,12 @@ variable "logging" {
   default = null
 }
 
+variable "policy" {
+  type        = string
+  description = "A valid bucket policy JSON document."
+  default     = null
+}
+
 variable "server_side_encryption_configuration" {
   type = object({
     # (required) The server-side encryption algorithm to use. Valid values are AES256 and aws:kms
@@ -79,6 +85,16 @@ variable "restrict_public_buckets" {
   type        = bool
   description = "Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false"
   default     = false
+}
+
+variable "website" {
+  type = object({
+    index_document           = string
+    error_document           = string
+    redirect_all_requests_to = string # Optional
+    routing_rules            = string # Optional
+  })
+  default = null
 }
 
 variable "tags" {
