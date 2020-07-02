@@ -13,7 +13,7 @@ resource "aws_vpc" "this" {
   assign_generated_ipv6_cidr_block = var.assign_generated_ipv6_cidr_block
 
   tags = merge({
-    Name        = "${var.vpc_name}-vpc"
+    Name        = "${var.vpc_name}-${var.environment}-vpc"
     Environment = var.environment
   }, var.tags)
 }
@@ -37,9 +37,10 @@ resource "aws_subnet" "public" {
   availability_zone = element(var.azs, count.index)
 
   tags = merge({
-    Name        = "${var.vpc_name}-public-${count.index + 1}"
+    Name        = "${var.vpc_name}-${var.environment}-public-${count.index + 1}"
     Environment = var.environment
-  }, var.tags)
+    }, var.public_subnet_tags,
+  var.tags)
 }
 
 # Route table: attach Internet Gateway
@@ -52,7 +53,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = merge({
-    Name        = "${var.vpc_name}-public-rt"
+    Name        = "${var.vpc_name}-${var.environment}-public-rt"
     Environment = var.environment
   }, var.tags)
 }
@@ -72,9 +73,10 @@ resource "aws_subnet" "private" {
   availability_zone = element(var.azs, count.index)
 
   tags = merge({
-    Name        = "${var.vpc_name}-private-${count.index + 1}"
+    Name        = "${var.vpc_name}-${var.environment}-private-${count.index + 1}"
     Environment = var.environment
-  }, var.tags)
+    }, var.private_subnet_tags,
+  var.tags)
 }
 
 
@@ -83,7 +85,7 @@ resource "aws_eip" "nat" {
   count = var.enable_nat_gateway ? length(var.azs) : 0
 
   tags = merge({
-    Name        = "${var.vpc_name}-nat-eip-${count.index + 1}"
+    Name        = "${var.vpc_name}-${var.environment}-nat-eip-${count.index + 1}"
     Environment = var.environment
   }, var.tags)
 }
@@ -94,7 +96,7 @@ resource "aws_nat_gateway" "this" {
   subnet_id     = aws_subnet.public[count.index].id
 
   tags = merge({
-    Name        = "${var.vpc_name}-ngw-${count.index + 1}"
+    Name        = "${var.vpc_name}-${var.environment}-ngw-${count.index + 1}"
     Environment = var.environment
   }, var.tags)
 }
@@ -109,7 +111,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = merge({
-    Name        = "${var.vpc_name}-private-rt-${count.index + 1}"
+    Name        = "${var.vpc_name}-${var.environment}-private-rt-${count.index + 1}"
     Environment = var.environment
   }, var.tags)
 }
