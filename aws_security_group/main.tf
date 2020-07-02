@@ -3,7 +3,6 @@ provider "aws" {
   region  = var.aws_region
 }
 
-
 resource "aws_security_group" "this" {
   name                   = var.name
   description            = var.description

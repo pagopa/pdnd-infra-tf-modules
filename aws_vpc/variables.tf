@@ -23,6 +23,18 @@ variable "tags" {
   default     = null
 }
 
+variable "private_subnet_tags" {
+  type        = map(string)
+  description = "A map of tags, each pair."
+  default     = null
+}
+
+variable "public_subnet_tags" {
+  type        = map(string)
+  description = "A map of tags, each pair."
+  default     = null
+}
+
 variable "public_subnets_cidr" {
   type = list
 }

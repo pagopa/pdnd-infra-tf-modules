@@ -39,7 +39,8 @@ resource "aws_subnet" "public" {
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-public-${count.index + 1}"
     Environment = var.environment
-  }, var.tags)
+    }, var.public_subnet_tags,
+  var.tags)
 }
 
 # Route table: attach Internet Gateway
@@ -74,7 +75,8 @@ resource "aws_subnet" "private" {
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-private-${count.index + 1}"
     Environment = var.environment
-  }, var.tags)
+    }, var.private_subnet_tags,
+  var.tags)
 }
 
 
