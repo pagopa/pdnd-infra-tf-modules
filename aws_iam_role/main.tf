@@ -13,6 +13,11 @@ resource "aws_iam_role" "this" {
   }, var.tags)
 }
 
+resource "aws_iam_instance_profile" "this" {
+  count = var.instance_profile_name != null ? 1 : 0
+  role  = aws_iam_role.this.name
+  name  = aws_iam_role.this.name
+}
 
 resource "aws_iam_role_policy_attachment" "this" {
   count      = length(var.policy_arn_attachments)

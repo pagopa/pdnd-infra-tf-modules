@@ -34,3 +34,10 @@ variable "policy_arn_attachments" {
   type    = list(string)
   default = []
 }
+
+variable "instance_profile_name" {
+  type        = string
+  description = "The name of the instance profile."
+  default     = null
+
+}
