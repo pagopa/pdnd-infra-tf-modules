@@ -175,7 +175,8 @@ variable "instance_identifier" {
 }
 
 variable "instance_class" {
-  type = string
+  type        = string
+  description = "The instance class to use."
 }
 
 variable "tags" {
