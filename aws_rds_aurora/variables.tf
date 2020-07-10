@@ -155,6 +155,30 @@ variable "iam_roles" {
   default     = []
 }
 
+variable "skip_final_snapshot" {
+  type        = bool
+  description = "Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created."
+  default     = false
+}
+
+
+# db instance
+variable "cluster_instances_count" {
+  type        = number
+  default     = 1
+  description = "The number of instances to include in the cluster."
+}
+
+variable "instance_identifier" {
+  type        = string
+  description = "The identifier for the RDS instance"
+}
+
+variable "instance_class" {
+  type        = string
+  description = "The instance class to use."
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags, each pair."
