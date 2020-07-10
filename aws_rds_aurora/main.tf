@@ -62,6 +62,24 @@ resource "aws_rds_cluster" "this" {
 
   iam_roles = var.iam_roles
 
+  skip_final_snapshot = var.skip_final_snapshot
+
+  tags = merge({
+    Name        = var.cluster_identifier
+    Environment = var.environment
+  }, var.tags)
+
+}
+
+resource "aws_rds_cluster_instance" "this" {
+  count              = var.cluster_instances_count
+  identifier         = "${var.instance_identifier}-${count.index}"
+  cluster_identifier = aws_rds_cluster.this.id
+  instance_class     = var.instance_class
+
+  engine         = aws_rds_cluster.this.engine
+  engine_version = aws_rds_cluster.this.engine_version
+
   tags = merge({
     Name        = var.cluster_identifier
     Environment = var.environment
