@@ -36,6 +36,7 @@ resource "aws_acm_certificate" "this" {
   certificate_body = var.self_signed == true ? tls_self_signed_cert.this[0].cert_pem : null
 
   tags = merge({
+    Name        = var.self_signed == true ? var.common_name : var.domain_name
     Environment = var.environment
   }, var.tags)
 
