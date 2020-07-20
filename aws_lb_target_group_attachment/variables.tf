@@ -28,9 +28,3 @@ variable "availability_zone" {
   description = "The Availability Zone where the IP address of the target is to be registered. If the private ip address is outside of the VPC scope, this value must be set to 'all'."
   default     = null
 }
-
-variable "depends_on" {
-  type        = list(string)
-  description = "List of resources to create explicit dependencies for"
-  default     = []
-}
