@@ -1,8 +1,3 @@
-provider "aws" {
-  version = "2.62.0"
-  region  = var.aws_region
-}
-
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
   acl    = var.website != null ? "public-read" : var.acl

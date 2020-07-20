@@ -1,8 +1,3 @@
-provider "aws" {
-  version = "2.62.0"
-  region  = var.aws_region
-}
-
 resource "aws_db_subnet_group" "this" {
   count = var.db_subnet_group_name == null ? 0 : 1
 
