@@ -1,9 +1,3 @@
-provider "aws" {
-  version = "2.62.0"
-  region  = var.aws_region
-}
-
-
 resource "tls_private_key" "this" {
   count     = var.self_signed == true ? 1 : 0
   algorithm = "RSA"

@@ -1,8 +1,3 @@
-provider "aws" {
-  version = "2.62.0"
-  region  = var.aws_region
-}
-
 resource "aws_security_group" "this" {
   name                   = var.name
   description            = var.description

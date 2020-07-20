@@ -1,8 +1,3 @@
-provider "aws" {
-  version = "2.62.0"
-  region  = var.aws_region
-}
-
 data "aws_secretsmanager_secret" "this" {
   name = var.secret_name
 }
