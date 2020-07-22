@@ -1,3 +1,51 @@
+commit c4447fd133f02674cfca72c29f75b787a88d2e5a
+Merge: 28f339f 3ceb344
+Author: Walter Traspadini <walter.traspadini@pagopa.it>
+Date:   Wed Jul 22 11:40:35 2020 +0200
+
+    Merge pull request #11 from pagopa/35-install-an-eks-cluster-for-all-the-additional-services
+    
+    [#35] Modules for aws_eks_cluster and aws_eks_node_group
+
+commit 3ceb344bdf02f13d74004fd1524e5d52bc32aa59
+Author: Walter Traspadini <walter.traspadini@sorint.it>
+Date:   Wed Jul 22 11:36:35 2020 +0200
+
+    [#35] modules for aws_eks_cluster and aws_eks_node_group
+
+commit 28f339fcd653cc95e8196947bb82742394ae2c82
+Author: Walter Traspadini <walter.traspadini@sorint.it>
+Date:   Mon Jul 20 09:29:58 2020 +0200
+
+    Release v0.1.0
+
+commit 33c83f18343b849e3ae1d14249c715a9dff3aed0
+Author: Walter Traspadini <walter.traspadini@sorint.it>
+Date:   Mon Jul 20 09:27:43 2020 +0200
+
+    Release v0.1.0
+
+commit 7ab4c57bebc8ab33d7f8fc03521fffd28d7224ed
+Merge: c03344a 060e9c5
+Author: Walter Traspadini <walter.traspadini@pagopa.it>
+Date:   Mon Jul 20 09:26:35 2020 +0200
+
+    Merge pull request #10 from pagopa/53-pdnd-terraform-modules-remove-the-provider
+    
+    [#53] pdnd terraform modules remove the provider
+
+commit 060e9c5876b5110662da44a60efe7ba2587572ab
+Author: Walter Traspadini <walter.traspadini@sorint.it>
+Date:   Mon Jul 20 09:25:09 2020 +0200
+
+    Release v0.1.0
+
+commit 16b833dff95672fdad974b2652ba46da531fd039
+Author: Walter Traspadini <walter.traspadini@sorint.it>
+Date:   Mon Jul 20 09:24:39 2020 +0200
+
+    change log
+
 commit 825eaed9f02d7c720747033fd7603a2e66901d20
 Author: Walter Traspadini <walter.traspadini@sorint.it>
 Date:   Mon Jul 20 09:13:59 2020 +0200
