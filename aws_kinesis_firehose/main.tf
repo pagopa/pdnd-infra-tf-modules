@@ -4,8 +4,6 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
 
   server_side_encryption {
     enabled = var.firehose_server_side_encryption.enabled
-    #key_type = var.firehose_server_side_encryption.key_type
-    #key_arn = var.firehose_server_side_encryption.key_arn
   }
 
   extended_s3_configuration {
@@ -63,9 +61,4 @@ data "aws_iam_policy_document" "firehose_put_role_template" {
     actions   = ["firehose:PutRecord","firehose:PutRecordBatch","firehose:UpdateDestination"]
     resources = [aws_kinesis_firehose_delivery_stream.this.arn]
   }
-}
-
-resource "aws_iam_policy" "this" {
-  name = "${var.firehose_name}-put-role"
-  policy = data.aws_iam_policy_document.firehose_put_role_template.json
 }
