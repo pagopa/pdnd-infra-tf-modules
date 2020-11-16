@@ -62,3 +62,8 @@ data "aws_iam_policy_document" "firehose_put_role_template" {
     resources = [aws_kinesis_firehose_delivery_stream.this.arn]
   }
 }
+
+resource "aws_iam_policy" "this" {
+  name = "${var.firehose_name}-put-policy"
+  policy = data.aws_iam_policy_document.firehose_put_role_template.json
+}
