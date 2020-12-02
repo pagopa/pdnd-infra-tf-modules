@@ -11,13 +11,25 @@ resource "aws_db_subnet_group" "this" {
 
 }
 
-data "aws_secretsmanager_secret" "this" {
+locals {
+  db_secrets = {
+    (var.master_username_secret_key) = var.master_username,
+    (var.master_password_secret_key) = var.master_password,
+    engine = var.db_engine,
+    host = var.db_host,
+    port = var.db_port,
+    dbname = var.db_dbname,
+  }
+}
+
+resource "aws_secretsmanager_secret" "this" {
   name = var.secret_name
 }
 
-data "aws_secretsmanager_secret_version" "this" {
-  secret_id     = "${data.aws_secretsmanager_secret.this.id}"
-  version_stage = var.version_stage
+resource "aws_secretsmanager_secret_version" "this" {
+  secret_id     = aws_secretsmanager_secret.this.id
+  version_stages = [var.version_stage]
+  secret_string = jsonencode(local.db_secrets)
 }
 
 resource "aws_rds_cluster" "this" {
@@ -28,8 +40,8 @@ resource "aws_rds_cluster" "this" {
   availability_zones      = var.availability_zones
   database_name           = var.database_name
   port                    = var.port
-  master_username         = jsondecode(data.aws_secretsmanager_secret_version.this.secret_string)[var.master_username_secret_key]
-  master_password         = jsondecode(data.aws_secretsmanager_secret_version.this.secret_string)[var.master_password_secret_key]
+  master_username         = jsondecode(aws_secretsmanager_secret_version.this.secret_string)[var.master_username_secret_key]
+  master_password         = jsondecode(aws_secretsmanager_secret_version.this.secret_string)[var.master_password_secret_key]
   backup_retention_period = var.backup_retention_period
   preferred_backup_window = var.preferred_backup_window
 
