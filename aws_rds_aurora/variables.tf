@@ -76,7 +76,7 @@ variable "secret_name" {
 variable "version_stage" {
   type        = string
   description = "The version of the secret."
-  default     = null
+  default     = "AWSCURRENT"
 }
 
 variable "master_username_secret_key" {
@@ -183,4 +183,30 @@ variable "tags" {
   type        = map(string)
   description = "A map of tags, each pair."
   default     = null
+}
+
+
+variable "master_username" {
+  type = string
+  default = null
+}
+variable "master_password" {
+  type = string
+  default = null
+}
+variable "db_engine" {
+  type = string
+  default = null
+}
+variable "db_host" {
+  type = string
+  default = null
+}
+variable "db_port" {
+  type = number
+  default = null
+}
+variable "db_dbname" {
+  type = string
+  default = null
 }
