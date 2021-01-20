@@ -64,3 +64,15 @@ variable "min_size" {
   type        = number
   description = "Minimum number of worker nodes."
 }
+variable "disk_size" {
+  type = number
+  description = "Disk size"
+  default = 20
+}
+
+variable "instance_types" {
+  type = list(string)
+  description = "EC2 size"
+  default = ["t3.medium"]
+
+}
