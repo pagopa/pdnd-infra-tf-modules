@@ -98,7 +98,7 @@ resource "aws_nat_gateway" "this" {
 
 # Route table: nat Gateway
 resource "aws_route_table" "private" {
-  count  = length(aws_nat_gateway.this.*.id)
+  count  = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_nat_gateway.this.*.id)
   vpc_id = aws_vpc.this.id
   route {
     cidr_block     = "0.0.0.0/0"
@@ -113,7 +113,7 @@ resource "aws_route_table" "private" {
 
 # Note: a subnet can be associated to only one nat gateway instance
 resource "aws_route_table_association" "private" {
-  count          = length(aws_route_table.private.*.id)
+  count          = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_route_table.private.*.id)
   route_table_id = aws_route_table.private[count.index].id
   subnet_id      = aws_subnet.private[count.index].id
 }

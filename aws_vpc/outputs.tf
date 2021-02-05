@@ -35,6 +35,10 @@ output "public_route_table_id" {
   value = length(aws_route_table.public.*.id) == 0 ? null : aws_route_table.public[0].id
 }
 
+output "private_route_table_id" {
+  value = length(aws_route_table.private.*.id) == 0 ? null : aws_route_table.private[0].id
+}
+
 output "nat_gateway_ids" {
   value = aws_nat_gateway.this.*.id
 }
