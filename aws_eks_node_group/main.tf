@@ -55,6 +55,13 @@ resource "aws_eks_node_group" "this" {
     min_size     = var.min_size
   }
 
+  dynamic "remote_access" {
+    for_each = var.ec2_ssh_key
+      remote_access {
+        ec2_ssh_key = remote_access.value
+      }
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.demo-node-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.demo-node-AmazonEKS_CNI_Policy,

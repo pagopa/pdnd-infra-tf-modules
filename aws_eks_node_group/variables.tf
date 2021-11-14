@@ -76,3 +76,8 @@ variable "instance_types" {
   default = ["t3.medium"]
 
 }
+
+variable "ec2_ssh_key" {
+  type        = string
+  description = "Name of the SSH key to be used to access nodes"
+}
