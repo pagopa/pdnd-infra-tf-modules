@@ -56,10 +56,10 @@ resource "aws_eks_node_group" "this" {
   }
 
   dynamic "remote_access" {
-    for_each = var.ec2_ssh_key
-      remote_access {
-        ec2_ssh_key = remote_access.value
-      }
+    for_each = var.ec2_ssh_key != null && var.ec2_ssh_key != "" ? ["true"] : []
+    content {
+      ec2_ssh_key               = var.ec2_ssh_key
+    }
   }
 
   depends_on = [
