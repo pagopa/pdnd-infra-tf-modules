@@ -42,19 +42,48 @@ variable "scope" {
 }
 
 variable "ip_set_addresses" {
-  type        = list
+  type        = list(string)
   description = "Contains an array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. AWS WAF supports all address ranges for IP versions IPv4 and IPv6."
   default     = ["0.0.0.0/0"]
 }
 
+variable "rule_group_name" {
+  type        = string
+  description = "Name of the rule group used for the white list."
+}
+
+variable "web_acl_name" {
+  type        = string
+  description = "Name of the web acl used."
+}
+
+variable "cloudwatch_metrics_enabled" {
+  type =      = bool
+  description = "Enable or disable cloudwatch metrics."
+  default = false
+}
+
+variable "sampled_requests_enabled" {
+  type =      = bool
+  description = "Enable or disable cloudwatch metrics sampling."
+  default = false
+}
+
+# Variable to define the origin load balancer for the WAF
+variable "lb_name" {
+  type        = string
+  description = "The name of the Load Balancer to be used as origin for the WAF."
+}
+
+
 # Variables used to define if default action will be "allow" or "block"
 
 variable "default_action_allow" {
-  type        = list
+  type        = list(string)
   description = "Set one value only to have default action to allow, only one between default_action_allow and default_action_block can be set"
 }
 
 variable "default_action_block" {
-  type        = list
+  type        = list(string)
   description = "Set one value only to have default action to block, only one between default_action_allow and default_action_block can be set"
 }

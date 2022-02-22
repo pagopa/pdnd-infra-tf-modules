@@ -32,16 +32,16 @@ resource "aws_wafv2_rule_group" "rule_group" {
     }
 
     visibility_config {
-      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled #boolean
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled
       metric_name                = "friendly-rule-metric-name"
-      sampled_requests_enabled   = var.sampled_requests_enabled #boolean
+      sampled_requests_enabled   = var.sampled_requests_enabled
     }
   }
 
   visibility_config {
-    cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled #boolean
+    cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
     metric_name                = "${var.project_name}-${var.environment}-waf-${var.rule_group_name}-metric"
-    sampled_requests_enabled   = var.sampled_requests_enabled #boolean
+    sampled_requests_enabled   = var.sampled_requests_enabled 
   }
 }
 
@@ -154,9 +154,9 @@ resource "aws_wafv2_web_acl" "web_acl" {
     }
 
     visibility_config {
-      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled #boolean
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
       metric_name                = "${var.project_name}-${var.environment}-waf-rule-metric"
-      sampled_requests_enabled   = var.sampled_requests_enabled #boolean
+      sampled_requests_enabled   = var.sampled_requests_enabled 
     }
   }
 
@@ -167,8 +167,17 @@ resource "aws_wafv2_web_acl" "web_acl" {
   )
 
   visibility_config {
-    cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled #boolean
+    cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
     metric_name                = "${var.project_name}-${var.environment}-waf-${var.web_acl_name}-metric"
-    sampled_requests_enabled   = var.sampled_requests_enabled #boolean
+    sampled_requests_enabled   = var.sampled_requests_enabled 
   }
+}
+
+resource "aws_wafv2_web_acl_association" "acl_association" {
+  resource_arn = data.aws_lb.origin.arn
+  web_acl_arn  = aws_wafv2_web_acl.web_acl.arn
+}
+
+data "aws_lb" "origin" {
+  name = var.lb_name
 }
