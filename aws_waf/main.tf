@@ -165,7 +165,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
 }
 
 resource "aws_wafv2_web_acl_association" "acl_association" {
-  resource_arn = data.aws_lb.origin.arn
+  resource_arn = data.aws_elb.origin.arn
   web_acl_arn  = aws_wafv2_web_acl.web_acl.arn
 }
 
