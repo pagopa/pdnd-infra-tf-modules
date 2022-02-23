@@ -84,7 +84,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
 
     statement {
       managed_rule_group_statement {
-        name        = "AWSManagedIPReputationList"
+        name        = "AWSManagedRulesAmazonIpReputationList"
         vendor_name = "AWS"
       }
     }
