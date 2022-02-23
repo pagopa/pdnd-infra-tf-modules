@@ -68,6 +68,11 @@ resource "aws_wafv2_web_acl" "web_acl" {
         vendor_name = "AWS"
       }
     }
+    visibility_config {
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
+      metric_name                = "${var.project_name}-${var.environment}-waf-rule-metric"
+      sampled_requests_enabled   = var.sampled_requests_enabled 
+    }
   }
   rule {
     name     = "IPReputationAwsManagedRules"
@@ -82,6 +87,11 @@ resource "aws_wafv2_web_acl" "web_acl" {
         name        = "AWSManagedIPReputationList"
         vendor_name = "AWS"
       }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
+      metric_name                = "${var.project_name}-${var.environment}-waf-rule-metric"
+      sampled_requests_enabled   = var.sampled_requests_enabled 
     }
   }
   rule {
@@ -98,6 +108,11 @@ resource "aws_wafv2_web_acl" "web_acl" {
         vendor_name = "AWS"
       }
     }
+    visibility_config {
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
+      metric_name                = "${var.project_name}-${var.environment}-waf-rule-metric"
+      sampled_requests_enabled   = var.sampled_requests_enabled 
+    }
   }
   rule {
     name     = "LinuxAwsManagedRules"
@@ -113,6 +128,11 @@ resource "aws_wafv2_web_acl" "web_acl" {
         vendor_name = "AWS"
       }
     }
+    visibility_config {
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
+      metric_name                = "${var.project_name}-${var.environment}-waf-rule-metric"
+      sampled_requests_enabled   = var.sampled_requests_enabled 
+    }
   }
   rule {
     name     = "BadInputsAwsManagedRules"
@@ -127,6 +147,11 @@ resource "aws_wafv2_web_acl" "web_acl" {
         name        = "AWSManagedRulesKnownBadInputsRuleSet"
         vendor_name = "AWS"
       }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled 
+      metric_name                = "${var.project_name}-${var.environment}-waf-rule-metric"
+      sampled_requests_enabled   = var.sampled_requests_enabled 
     }
   }
     
