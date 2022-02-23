@@ -169,6 +169,6 @@ resource "aws_wafv2_web_acl_association" "acl_association" {
   web_acl_arn  = aws_wafv2_web_acl.web_acl.arn
 }
 
-data "aws_lb" "origin" {
+data "aws_elb" "origin" {
   name = var.lb_name
 }
