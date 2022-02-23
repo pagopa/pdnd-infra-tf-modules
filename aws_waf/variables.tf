@@ -58,13 +58,13 @@ variable "web_acl_name" {
 }
 
 variable "cloudwatch_metrics_enabled" {
-  type =      = bool
+  type        = bool
   description = "Enable or disable cloudwatch metrics."
   default = false
 }
 
 variable "sampled_requests_enabled" {
-  type =      = bool
+  type        = bool
   description = "Enable or disable cloudwatch metrics sampling."
   default = false
 }
@@ -76,14 +76,6 @@ variable "lb_name" {
 }
 
 
-# Variables used to define if default action will be "allow" or "block"
 
-variable "default_action_allow" {
-  type        = list(string)
-  description = "Set one value only to have default action to allow, only one between default_action_allow and default_action_block can be set"
-}
 
-variable "default_action_block" {
-  type        = list(string)
-  description = "Set one value only to have default action to block, only one between default_action_allow and default_action_block can be set"
-}
+

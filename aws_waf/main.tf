@@ -49,19 +49,10 @@ resource "aws_wafv2_web_acl" "web_acl" {
   name  = var.web_acl_name
   scope = var.scope
 
-  dynamic "default_action" {
-    for_each = var.default_action_allow
-      content {
-            allow {}
-      }
+  default_action {
+        block {}
   }
 
-  dynamic "default_action" {
-    for_each = var.default_action_block
-      content {
-            block {}
-      }
-  }
 
   rule {
     name     = "DefaultAwsManagedRules"
