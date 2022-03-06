@@ -190,10 +190,10 @@ resource "aws_wafv2_web_acl" "web_acl" {
 }
 
 resource "aws_wafv2_web_acl_association" "acl_association" {
-  resource_arn = data.aws_elb.origin.arn
+  resource_arn = data.aws_lb.origin.arn
   web_acl_arn  = aws_wafv2_web_acl.web_acl.arn
 }
 
-data "aws_elb" "origin" {
+data "aws_lb" "origin" {
   name = var.lb_name
 }
