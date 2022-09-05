@@ -98,7 +98,7 @@ resource "aws_nat_gateway" "this" {
 
 # Route table: nat Gateway
 resource "aws_route_table" "private" {
-  count  = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_nat_gateway.this.*.id)
+  count  = length(slice(var.private_subnets_cidr)) == 0 ? 0 : length(aws_nat_gateway.this.*.id)
   vpc_id = aws_vpc.this.id
   route {
     cidr_block     = "0.0.0.0/0"
@@ -110,17 +110,15 @@ resource "aws_route_table" "private" {
     gateway_id = "vgw-0678f7da286c28d58"
   }
 
-  # route {
-  #   cidr_block = "10.250.36.0/27"
-  #   vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
-  # }
+  route {
+    cidr_block = "10.250.36.0/27"
+    vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
+  }
 
-  # route {
-  #   cidr_block = "10.250.36.32/27"
-  #   vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
-  # }
-
-
+  route {
+    cidr_block = "10.250.36.32/27"
+    vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
+  }
 
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-private-rt-${count.index + 1}"
@@ -128,6 +126,24 @@ resource "aws_route_table" "private" {
   }, var.tags)
 }
 
+resource "aws_route_table" "private" {
+  count  = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_nat_gateway.this.*.id)
+  vpc_id = aws_vpc.this.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.this[count.index+1].id
+  }
+
+  route {
+    cidr_block = "10.250.20.128/27"
+    gateway_id = "vgw-0678f7da286c28d58"
+  }
+
+  tags = merge({
+    Name        = "${var.vpc_name}-${var.environment}-private-rt-${count.index + 2}"
+    Environment = var.environment
+  }, var.tags)
+}
 # Note: a subnet can be associated to only one nat gateway instance
 resource "aws_route_table_association" "private" {
   count          = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_route_table.private.*.id)
