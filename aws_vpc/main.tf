@@ -101,8 +101,13 @@ resource "aws_route_table" "private" {
   count  = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_nat_gateway.this.*.id)
   vpc_id = aws_vpc.this.id
   route {
-    cidr_block     = "0.0.0.0/0"
+    cidr_block     = "0.0.0.1/0"
     nat_gateway_id = aws_nat_gateway.this[count.index].id
+  }
+
+    route {
+    cidr_block = "10.250.20.128/27"
+    gateway_id = "vgw-0678f7da286c28d58"
   }
 
   tags = merge({
