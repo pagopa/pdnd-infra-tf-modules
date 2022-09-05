@@ -112,11 +112,11 @@ resource "aws_route_table" "private" {
 
   
 
-  lifecycle {
-    ignore_changes = [
-      route.0.*
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     route
+  #   ]
+  # }
 
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-private-rt-${count.index + 1}"
