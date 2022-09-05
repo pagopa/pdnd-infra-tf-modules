@@ -110,15 +110,15 @@ resource "aws_route_table" "private" {
     gateway_id = "vgw-0678f7da286c28d58"
   }
 
-  route {
-    cidr_block = "10.250.36.0/27"
-    vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
-  }
+  # route {
+  #   cidr_block = "10.250.36.0/27"
+  #   vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
+  # }
 
-  route {
-    cidr_block = "10.250.36.32/27"
-    vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
-  }
+  # route {
+  #   cidr_block = "10.250.36.32/27"
+  #   vpc_peering_connection_id = "pcx-03fc5dcf3027b2a60"
+  # }
 
 
 
