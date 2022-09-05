@@ -114,7 +114,7 @@ resource "aws_route_table" "private" {
 
   lifecycle {
     ignore_changes = [
-      route.*.cidr_block
+      route.0.cidr_block
     ]
   }
 
