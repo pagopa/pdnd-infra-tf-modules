@@ -114,7 +114,7 @@ resource "aws_route_table" "private" {
 
   lifecycle {
     ignore_changes = [
-      route
+      route[*]
     ]
   }
 
