@@ -59,7 +59,7 @@ resource "aws_route_table" "public" {
 
 # Route table association with public subnets
 resource "aws_route_table_association" "public" {
-  count          = length(aws_internet_gateway.this.*.id) == 0 ? 0 : length(var.public_subnets_cidr)
+  count          = length(slice(aws_internet_gateway.this.*.id, 0, 1)) == 0 ? 0 : length(var.public_subnets_cidr)
   subnet_id      = element(aws_subnet.public.*.id, count.index)
   route_table_id = aws_route_table.public[0].id
 }
