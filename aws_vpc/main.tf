@@ -66,7 +66,7 @@ resource "aws_route_table_association" "public" {
 
 # Private Subnet
 resource "aws_subnet" "private" {
-  count             = length(slice(var.private_subnets_cidr, 0, 1))
+  count             = 1
   vpc_id            = aws_vpc.this.id
   cidr_block        = element(var.private_subnets_cidr, count.index)
   availability_zone = element(var.azs, count.index)
