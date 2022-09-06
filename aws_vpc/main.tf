@@ -66,7 +66,7 @@ resource "aws_route_table_association" "public" {
 
 # Private Subnet
 resource "aws_subnet" "private" {
-  count             = 1
+  count             = length(var.private_subnets_cidr)
   vpc_id            = aws_vpc.this.id
   cidr_block        = element(var.private_subnets_cidr, count.index)
   availability_zone = element(var.azs, count.index)
@@ -126,7 +126,7 @@ resource "aws_route_table" "private" {
 
 # Note: a subnet can be associated to only one nat gateway instance
 resource "aws_route_table_association" "private" {
-  count          = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_route_table.private.*.id)
+  count          = 1
   route_table_id = aws_route_table.private[count.index].id
   subnet_id      = aws_subnet.private[count.index].id
 }
