@@ -47,9 +47,9 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.this[count.index].id
   }
 
-  lifecycle {
-    ignore_changes = ["route"]
-  }
+  # lifecycle {
+  #   ignore_changes = ["route"]
+  # }
 
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-public-rt"
@@ -114,9 +114,9 @@ resource "aws_route_table" "private" {
     gateway_id = "vgw-0678f7da286c28d58"
   }
 
-  lifecycle {
-    ignore_changes = ["route"]
-  }
+  # lifecycle {
+  #   ignore_changes = ["route"]
+  # }
 
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-private-rt-${count.index + 1}"
@@ -126,7 +126,7 @@ resource "aws_route_table" "private" {
 
 # Note: a subnet can be associated to only one nat gateway instance
 resource "aws_route_table_association" "private" {
-  count          = 1
+  count          = length(var.private_subnets_cidr) == 0 ? 0 : length(aws_route_table.private.*.id)
   route_table_id = aws_route_table.private[count.index].id
   subnet_id      = aws_subnet.private[count.index].id
 }
