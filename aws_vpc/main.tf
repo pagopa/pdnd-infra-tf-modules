@@ -113,9 +113,7 @@ resource "aws_route_table" "private" {
   
 
   lifecycle {
-    ignore_changes = [
-      route[0].cidr_block
-    ]
+    ignore_changes = ["route"]
   }
 
   tags = merge({
