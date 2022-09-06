@@ -47,6 +47,10 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.this[count.index].id
   }
 
+  lifecycle {
+    ignore_changes = ["route"]
+  }
+
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-public-rt"
     Environment = var.environment
@@ -109,8 +113,6 @@ resource "aws_route_table" "private" {
     cidr_block = "10.250.20.128/27"
     gateway_id = "vgw-0678f7da286c28d58"
   }
-
-  
 
   lifecycle {
     ignore_changes = ["route"]
