@@ -59,14 +59,14 @@ resource "aws_route_table" "public" {
 
 # Route table association with public subnets
 resource "aws_route_table_association" "public" {
-  count          = length(slice(aws_internet_gateway.this.*.id, 0, 1)) == 0 ? 0 : length(var.public_subnets_cidr)
+  count          = length(aws_internet_gateway.this.*.id) == 0 ? 0 : length(var.public_subnets_cidr)
   subnet_id      = element(aws_subnet.public.*.id, count.index)
   route_table_id = aws_route_table.public[0].id
 }
 
 # Private Subnet
 resource "aws_subnet" "private" {
-  count             = length(var.private_subnets_cidr)
+  count             = length(slice(var.private_subnets_cidr, 0, 1))
   vpc_id            = aws_vpc.this.id
   cidr_block        = element(var.private_subnets_cidr, count.index)
   availability_zone = element(var.azs, count.index)
