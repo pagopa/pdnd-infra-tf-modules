@@ -74,18 +74,18 @@ resource "aws_eks_node_group" "this" {
   }, var.tags)
 }
 
-# resource "aws_autoscaling_schedule" "this" {
-#   count = length(aws_eks_node_group.this.resources)
-#   scheduled_action_name  = "scheduled-shutdown"
-#   min_size               = 0
-#   desired_capacity       = 0
-#   autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
-# }
+resource "aws_autoscaling_schedule" "this" {
+  count = length(aws_eks_node_group.this.resources)
+  scheduled_action_name  = "scheduled-shutdown"
+  min_size               = 0
+  desired_capacity       = 0
+  autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
+}
 
-# resource "aws_autoscaling_schedule" "this" {
-#   count = length(aws_eks_node_group.this.resources)
-#   scheduled_action_name  = "scheduled-spinup"
-#   min_size               = 5
-#   desired_capacity       = 5
-#   autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
-# }
+resource "aws_autoscaling_schedule" "this" {
+  count = length(aws_eks_node_group.this.resources)
+  scheduled_action_name  = "scheduled-spinup"
+  min_size               = 5
+  desired_capacity       = 5
+  autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
+}
