@@ -82,7 +82,7 @@ resource "aws_autoscaling_schedule" "shutdown" {
   desired_capacity       = 0
   autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
   recurrence             = var.shutdown_time
-  time_zone               = "Etc/UTC"
+  time_zone              = "Etc/UTC"
 }
 
 resource "aws_autoscaling_schedule" "spinup" {
