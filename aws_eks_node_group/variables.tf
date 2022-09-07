@@ -90,8 +90,6 @@ variable "shutdown_time" {
     Example:
     shutdown_time = "0 17 * * *" # UTC, it's 7PM it GMT+2
   EOT
-
-  "Cron string to specify the shutdown time (UTC) of the cluster, e.g: '0 9 * * *'"
 }
 
 variable "spinup_time" {
