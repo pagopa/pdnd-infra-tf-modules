@@ -102,3 +102,4 @@ variable "spinup_time" {
     Example:
     shutdown_time = "0 4 * * *" # UTC, it's 6AM in GMT+2
   EOT
+}
