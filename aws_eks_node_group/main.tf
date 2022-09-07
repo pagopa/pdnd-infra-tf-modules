@@ -82,16 +82,16 @@ resource "aws_autoscaling_schedule" "shutdown" {
   desired_capacity       = 0
   autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
   recurrence             = var.shutdown_time
-  timezone               = "Etc/UTC"
+  time_zone               = "Etc/UTC"
 }
 
 resource "aws_autoscaling_schedule" "spinup" {
   count                  = length(aws_eks_node_group.this.resources)
   scheduled_action_name  = "scheduled-spinup"
-  min_size               = var.mix_size
-  desired_capacity       = var.desired_capacity
+  min_size               = var.min_size
+  desired_capacity       = var.desired_size
   max_size               = var.max_size
   autoscaling_group_name = aws_eks_node_group.this.resources[count.index].autoscaling_groups[0].name
   recurrence             = var.spinup_time
-  timezone               = "Etc/UTC"
+  time_zone              = "Etc/UTC"
 }
