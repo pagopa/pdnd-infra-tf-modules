@@ -81,3 +81,24 @@ variable "ec2_ssh_key" {
   type        = string
   description = "Name of the SSH key to be used to access nodes"
 }
+
+variable "shutdown_time" {
+  type        = string
+  description = <<EOT
+    Cron string to specify the shutdown time (UTC) of the cluster.
+
+    Example:
+    shutdown_time = "0 17 * * *" # UTC, it's 7PM it GMT+2
+  EOT
+
+  "Cron string to specify the shutdown time (UTC) of the cluster, e.g: '0 9 * * *'"
+}
+
+variable "spinup_time" {
+  type        = string
+  description = <<EOT
+    Cron string to specify the spinup time (UTC) of the cluster.
+
+    Example:
+    shutdown_time = "0 4 * * *" # UTC, it's 6AM in GMT+2
+  EOT
