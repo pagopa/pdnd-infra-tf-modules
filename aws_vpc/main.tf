@@ -105,11 +105,6 @@ resource "aws_route_table" "private" {
     nat_gateway_id = aws_nat_gateway.this[count.index].id
   }
 
-  route {
-    cidr_block = "10.250.20.128/27"
-    gateway_id = "vgw-0678f7da286c28d58"
-  }
-
   tags = merge({
     Name        = "${var.vpc_name}-${var.environment}-private-rt-${count.index + 1}"
     Environment = var.environment
