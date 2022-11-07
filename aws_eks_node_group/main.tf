@@ -41,13 +41,28 @@ resource "aws_iam_role_policy_attachment" "demo-node-AmazonEC2ContainerRegistryR
   role       = module.iam_role.name
 }
 
+resource "aws_launch_template" "eks_launch_template" {
+  name = "eks-8ebfc9ef-1fec-5cf7-9477-9cf2afe08c30"
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "optional"
+    http_put_response_hop_limit = 1
+  }
+
+  tags = {
+    "eks:cluster-name"   = "${var.cluster_name}",
+    "eks:nodegroup-name" = "${var.node_group_name}"
+  }
+}
+
 resource "aws_eks_node_group" "this" {
   cluster_name    = var.cluster_name
   node_group_name = var.node_group_name
   node_role_arn   = module.iam_role.arn
   subnet_ids      = var.subnet_ids
-  disk_size = var.disk_size
-  instance_types = var.instance_types
+  disk_size       = var.disk_size
+  instance_types  = var.instance_types
 
   scaling_config {
     desired_size = var.desired_size
@@ -55,10 +70,15 @@ resource "aws_eks_node_group" "this" {
     min_size     = var.min_size
   }
 
+  launch_template {
+    name = var.cluster_name
+    version = aws_launch_template.eks_launch_template.latest_version
+  }
+
   dynamic "remote_access" {
     for_each = var.ec2_ssh_key != null && var.ec2_ssh_key != "" ? ["true"] : []
     content {
-      ec2_ssh_key               = var.ec2_ssh_key
+      ec2_ssh_key = var.ec2_ssh_key
     }
   }
 
