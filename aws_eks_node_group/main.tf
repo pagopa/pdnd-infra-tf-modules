@@ -42,17 +42,39 @@ resource "aws_iam_role_policy_attachment" "demo-node-AmazonEC2ContainerRegistryR
 }
 
 resource "aws_launch_template" "eks_launch_template" {
-  name = "eks-8ebfc9ef-1fec-5cf7-9477-9cf2afe08c30"
+  name          = "eks-8ebfc9ef-1fec-5cf7-9477-9cf2afe08c30"
+  instance_type = "t3.2xlarge"
+  image_id      = "ami-0c37e3f6cdf6a9007"
 
   metadata_options {
     http_endpoint               = "enabled"
-    http_tokens                 = "optional"
-    http_put_response_hop_limit = 1
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 2
   }
+
+  key_name = var.ec2_ssh_key
 
   tags = {
     "eks:cluster-name"   = "${var.cluster_name}",
     "eks:nodegroup-name" = "${var.node_group_name}"
+  }
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      delete_on_termination = "true"
+      volume_size           = 160
+      volume_type           = "gp2"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      user_data,
+      iam_instance_profile,
+      network_interfaces
+    ]
   }
 }
 
@@ -71,7 +93,7 @@ resource "aws_eks_node_group" "this" {
   }
 
   launch_template {
-    name = var.cluster_name
+    name    = var.cluster_name
     version = aws_launch_template.eks_launch_template.latest_version
   }
 
@@ -87,6 +109,12 @@ resource "aws_eks_node_group" "this" {
     aws_iam_role_policy_attachment.demo-node-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.demo-node-AmazonEC2ContainerRegistryReadOnly,
   ]
+
+  lifecycle {
+    ignore_changes = [
+      launch_template
+    ]
+  }
 
   tags = merge({
     Name        = var.node_group_name
