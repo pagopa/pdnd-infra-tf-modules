@@ -43,6 +43,8 @@ resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSServicePolicy" {
 resource "aws_eks_cluster" "this" {
   name     = var.cluster_name
   role_arn = module.iam_role.arn
+  
+  platform_version = var.platfrom_version
 
   vpc_config {
     security_group_ids = var.security_group_ids
